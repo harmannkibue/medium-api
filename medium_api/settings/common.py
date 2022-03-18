@@ -1,9 +1,9 @@
 
 import os
 from pathlib import Path
-import environ
+from dotenv import load_dotenv
 
-env = environ.Env()
+load_dotenv()
 
 # # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -70,23 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'medium_api.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': env.db("DATABASE_URL")
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(ROOT_DIR, 'db.sqlite3'),
-    }
-}
-
-DATABASES['default']['ATOMIC_REQUESTS'] = True
-
 # Using argon2 Password Hasher from the documentation
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
@@ -129,7 +112,7 @@ USE_TZ = True
 
 SITE_ID = 1
 
-ADMIN_URL = env("ADMIN_URL", default="mostsecret")
+ADMIN_URL = os.getenv("ADMIN_URL", default="mostsecret")
 
 ADMINS = ["""Harman Kibue""", "harmannkibue@gmail.com"]
 
@@ -146,7 +129,7 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-MEDIA_URL = '/mediafiles'
+MEDIA_URL = '/mediafiles/'
 MEDIA_ROOT = str(ROOT_DIR / "mediafiles")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
