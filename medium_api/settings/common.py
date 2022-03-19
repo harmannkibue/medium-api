@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 APPS_DIR = ROOT_DIR / "core_apps"
 
@@ -118,11 +118,8 @@ ADMINS = ["""Harman Kibue""", "harmannkibue@gmail.com"]
 
 MANAGERS = ADMINS
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_URL = '/staticfiles/'
-STATIC_ROOT = str(STATIC_URL + "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = []
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -130,8 +127,29 @@ STATICFILES_FINDERS = [
 ]
 
 MEDIA_URL = '/mediafiles/'
-MEDIA_ROOT = str(ROOT_DIR / "mediafiles")
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_URL_REGEX = r"^/api/.*$"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': 'Customlog %(levelname)s %(name)-12s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
