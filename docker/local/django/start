@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# The whole script should fail if any command fails
+set -o errexit
+# Exit if any of pipeline commands fails
+set -o pipefail
+# Exit if any of the variables is not set
+set -o nounset
+
+python3 manage.py migrate --no-input
+python3 manage.py collectstatic --no-input
+python3 manage.py runserver 0.0.0.0:8000
